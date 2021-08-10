@@ -15,32 +15,32 @@ class App extends Component {
     this.formSubmit = this.formSubmit.bind(this);
   }
 
-  editTaskBtn (event) {
+  editTaskBtn (event) {   // Code Flow for amending a task.
     let editPos = event.target.getAttribute("data-pos");
-    let editValue = this.state.tasks[editPos];
+    let editValue = this.state.tasks[editPos]; // Find the task to be updated.
 
-    var newButton = document.getElementById("submit_task_btn").cloneNode(true);
+    var newButton = document.getElementById("submit_task_btn").cloneNode(true); // Updating the submit button for the Edit Functionality.
     var oldButton = document.getElementById("submit_task_btn");
     oldButton.parentNode.replaceChild(newButton, oldButton);
-
-    document.getElementById("add_task_input").setAttribute("data-edit-pos", editPos);
-    document.getElementById("add_task_input").value = editValue;
-    document.getElementById("add_task_input").focus();
     newButton.textContent = "Resubmit";
     newButton.addEventListener("click",this.onEditSubmit);
+
+    document.getElementById("add_task_input").setAttribute("data-edit-pos", editPos);
+    document.getElementById("add_task_input").value = editValue; // Updating the Input form for edit Functionality.
+    document.getElementById("add_task_input").focus();
   }
 
   formSubmit (event) {
     event.preventDefault();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate() {    // Adding event listener for the Edit Buttons after render.
     document.querySelectorAll("#edit_task_btn").forEach((editBtn) => {
       editBtn.addEventListener("click",this.editTaskBtn);
     });
   }
 
-  onEditSubmit () {
+  onEditSubmit () {   // Function to update state with amended task value.
     let currentTaskList = this.state.tasks;
     let editPos = document.getElementById("add_task_input").getAttribute("data-edit-pos");
     let editValue  = document.getElementById("add_task_input").value;
@@ -51,7 +51,7 @@ class App extends Component {
     document.getElementById("task_form").reset();
   }
 
-  onAddSubmit () {
+  onAddSubmit () { // Function to add to state with newly added task.
     var newTaskToAdd = document.getElementById("add_task_input").value;
     this.setState({
       tasks : this.state.tasks.concat(newTaskToAdd),
